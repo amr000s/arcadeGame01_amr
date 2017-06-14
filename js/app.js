@@ -8,6 +8,22 @@ var Enemy = function() {
     this.sprite = 'images/enemy-bug.png';
 };
 
+var allEnemies = [];
+
+var Player = function (){};
+var player = new Player;
+var play = false;
+//Array of URLs for player
+var chars = [ 
+    'images/char-boy.png',
+    'images/char-cat-girl.png',
+    'images/char-horn-girl.png',
+    'images/char-pink-girl.png',
+    'images/char-princess-girl.png'
+];
+
+Player.prototype.update =function () {};
+player.prototype.render =function () {};
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {

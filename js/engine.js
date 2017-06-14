@@ -107,13 +107,15 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
+		
+		if(play==true) {
         var rowImages = [
                 'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/grass-block.png',   // Row 1 of 3 of stone
+                'images/grass-block.png',   // Row 2 of 3 of stone
+                'images/grass-block.png',   // Row 3 of 3 of stone
+                'images/stone-block.png',   // Row 1 of 2 of grass
+                'images/stone-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 6,
             numCols = 5,
@@ -135,10 +137,33 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
+}
+		
+			else {
+				
+				loadChar();
+			}
+			
+			
+			
+		
         renderEntities();
     }
 
+	function loadChar () {
+		
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (col = 0; col <5; col++) {
+				ctx.drawImage(Resources.get("images/stone-block.png"), col * 101 + 101, 249);
+			}
+		var i;
+		for (var i = 0; i < chars.length; i++) {
+			ctx.drawImage(Resources.get(chars[i]), i * 101 + 101, 215);
+			//selector.render();
+		}
+		
+		
+	}
     /* This function is called by the render function and is called on each game
      * tick. Its purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
@@ -166,12 +191,19 @@ var Engine = (function(global) {
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
+	
     Resources.load([
         'images/stone-block.png',
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+		'images/Star.png',
+		'images/Selector.png',
+		'images/char-cat-girl.png',
+		'images/char-horn-girl.png',
+		'images/char-pink-girl.png',
+		'images/char-princess-girl.png'
     ]);
     Resources.onReady(init);
 
