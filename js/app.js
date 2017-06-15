@@ -37,7 +37,7 @@ var Selector = function() {
     this.sprite = 'images/Selector.png';
     this.alpha = 1;
     this.throbdir = 'down';
-    //ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Selector render function
@@ -63,7 +63,25 @@ Selector.prototype.throb = function() {
             this.throbdir = 'down';
         }
     }
-}
+};
+
+Selector.prototype.handleInput = function(key) {
+    switch(key) {
+        case 'left':
+            this.col > 0 ? (this.col--, this.x = this.col * 101 + 101) : this.col;
+            break;
+        case 'right':
+            this.col < 4 ? (this.col++, this.x = this.col * 101 + 101) : this.col;
+            break;
+        case 'enter':
+            selectedChar = this.col;
+            play = true;
+            gameReset();
+            break;
+        default:
+            break;
+    }
+};
 
 Player.prototype.update = function () {};
 player.prototype.render = function () {};
@@ -101,5 +119,10 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
     };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    if (play === false) {
+        selector.handleInput(allowedKeys[e.keyCode]);
+    }
+    else {
+        player.handleInput(allowedKeys[e.keyCode]);
+    }
 });

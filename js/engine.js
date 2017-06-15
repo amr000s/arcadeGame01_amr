@@ -108,7 +108,7 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
 		
-		if(play==true) {
+		if(play === true) {
         var rowImages = [
                 'images/water-block.png',   // Top row is water
                 'images/grass-block.png',   // Row 1 of 3 of stone
@@ -146,21 +146,7 @@ var Engine = (function(global) {
         renderEntities();
     }
 
-    
-function loadChar () {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (col = 0; col <5; col++) {
-				ctx.drawImage(Resources.get("images/stone-block.png"), col * 101 + 101, 249);
-			}
-    Selector.render();
-        
-		for (var i = 0; i < chars.length; i++) {
-			ctx.drawImage(Resources.get(chars[i]), i * 101 + 101, 215);
-			//selector.render();
-		}
-	}
-    
-    /* This function is called by the render function and is called on each game
+	 /* This function is called by the render function and is called on each game
      * tick. Its purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
      */
@@ -174,6 +160,27 @@ function loadChar () {
 
         player.render();
     }
+	
+	
+	
+	
+	
+    
+function loadChar () {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (col = 0; col <5; col++) {
+				ctx.drawImage(Resources.get("images/stone-block.png"), col * 101 + 101, 249);
+			}
+	
+   Selector();
+        
+		for (var i = 0; i < chars.length; i++) {
+			ctx.drawImage(Resources.get(chars[i]), i * 101 + 101, 215);
+			//selector.render();
+		}
+	}
+    
+   
 
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
