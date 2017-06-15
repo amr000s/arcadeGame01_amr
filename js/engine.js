@@ -143,27 +143,23 @@ var Engine = (function(global) {
 				
 				loadChar();
 			}
-			
-			
-			
-		
         renderEntities();
     }
 
-	function loadChar () {
-		
+    
+function loadChar () {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (col = 0; col <5; col++) {
 				ctx.drawImage(Resources.get("images/stone-block.png"), col * 101 + 101, 249);
 			}
-		var i;
+    Selector.render();
+        
 		for (var i = 0; i < chars.length; i++) {
 			ctx.drawImage(Resources.get(chars[i]), i * 101 + 101, 215);
 			//selector.render();
 		}
-		
-		
 	}
+    
     /* This function is called by the render function and is called on each game
      * tick. Its purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js

@@ -10,7 +10,12 @@ var Enemy = function() {
 
 var allEnemies = [];
 
+
 var Player = function (){};
+
+
+
+
 var player = new Player;
 var play = false;
 //Array of URLs for player
@@ -22,8 +27,46 @@ var chars = [
     'images/char-princess-girl.png'
 ];
 
-Player.prototype.update =function () {};
-player.prototype.render =function () {};
+
+
+// Selector Frame 
+var Selector = function() {
+    this.col = 0;
+    this.x = this.col * 101 + 101;
+    this.y = 208;
+    this.sprite = 'images/Selector.png';
+    this.alpha = 1;
+    this.throbdir = 'down';
+    //ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+// Selector render function
+Selector.prototype.render = function() {
+    ctx.save();
+    this.throb();
+    ctx.globalAlpha = this.alpha;
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.restore();
+};
+
+var selector;
+
+// Helper for Selector.render that uses alpha transparency to "throb" the selector
+Selector.prototype.throb = function() {
+    if (this.alpha > 0.5 && this.throbdir === 'down') {
+        this.alpha -= 0.0075;
+    }
+    else {
+        this.throbdir = 'up';
+        this.alpha += 0.0075;
+        if (this.alpha > 1 && this.throbdir === 'up') {
+            this.throbdir = 'down';
+        }
+    }
+}
+
+Player.prototype.update = function () {};
+player.prototype.render = function () {};
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
