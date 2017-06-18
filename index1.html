@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Effective JavaScript: Frogger</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <script>
+       var doc = document;
+        var win = window;
+        var canvas = doc.createElement('canvas');
+        ctx = canvas.getContext('2d');
+        
+
+    canvas.width = 505;
+    canvas.height = 606;
+    canvas.style = "border : 1px solid grey";
+    doc.body.appendChild(canvas);
+        
+    // ---------- Selector Class ---------- \\
+
+/* Selector used for character selection
+ * col Selector column
+ * realx Vertical coordinate at which to draw selector
+ * y Vertical coordinate
+ * alpha Transparency value for the sprite
+ * throbdir Direction of visual throb: down for transparent, up for opaque
+ */
+var Selector = function() {
+    this.col = 0;
+    this.x = this.col * 101 + 101;
+    this.y = 208;
+    this.sprite = 'images/Selector.png';
+    this.alpha = 1;
+    this.throbdir = 'down';
+};
+
+// Receives input from user to move selector
+Selector.prototype.handleInput = function(key) {
+    switch(key) {
+        case 'left':
+            this.col > 0 ? (this.col--, this.x = this.col * 101 + 101) : this.col;
+            break;
+        case 'right':
+            this.col < 4 ? (this.col++, this.x = this.col * 101 + 101) : this.col;
+            break;
+        case 'enter':
+            selectedChar = this.col;
+            play = true;
+            gameReset();
+            break;
+        default:
+            break;
+    }
+};
+
+// Selector render function
+Selector.prototype.render = function() {
+    ctx.save();
+    this.throb();
+    ctx.globalAlpha = this.alpha;
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.restore();
+};
+
+// Helper for Selector.render that uses alpha transparency to "throb" the selector
+        
+Selector.prototype.throb = function() {
+    if (this.alpha > 0.5 && this.throbdir === 'down') {
+        this.alpha -= 0.0075;
+    }
+    else {
+        this.throbdir = 'up';
+        this.alpha += 0.0075;
+        if (this.alpha > 1 && this.throbdir === 'up') {
+            this.throbdir = 'down';
+        }
+    }
+}
+        Selector.render;
+        
+    document.addEventListener('keyup', function(e) {
+    var allowedKeys = {
+        13: 'enter',
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down'
+    };
+    if (play === false) {
+        selector.handleInput(allowedKeys[e.keyCode]);
+    }
+    else {
+        player.handleInput(allowedKeys[e.keyCode]);
+    }
+        
+});
+    
+    
+    
+ 
+    
+    </script>
+<!--
+    <script src="js/resources.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script src="E:/Documents/Dropbox/Udacity/arcade-game-master/arcade-game-masterSaveLife/js/app.js"></script>
+    <script src="js/engine.js"></script>
+-->
+</body>
+</html>
