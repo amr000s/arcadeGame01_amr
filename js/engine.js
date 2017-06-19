@@ -92,9 +92,12 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
-        allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
-        });
+       if (play === true) {
+            allEnemies.forEach(function(enemy) {
+                
+               enemy.update(dt);
+            });
+       }
       //  player.update();
     }
 
@@ -110,6 +113,7 @@ var Engine = (function(global) {
          */
 		
 		if(play === true) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
         var rowImages = [
                 'images/water-block.png',   // Top row is water
                 'images/grass-block.png',   // Row 1 of 3 of stone
@@ -126,7 +130,22 @@ var Engine = (function(global) {
          * and, using the rowImages array, draw the correct image for that
          * portion of the "grid"
          */
+            
+            
+            
+           
         for (row = 0; row < numRows; row++) {
+                       
+			 allEnemies.forEach(function(enemy) {
+                            if (row === 1 && enemy.row === 1) {
+                                enemy.render();
+                            }
+                        });
+			
+			
+			
+            
+            
             for (col = 0; col < numCols; col++) {
                 /* The drawImage function of the canvas' context element
                  * requires 3 parameters: the image to draw, the x coordinate
@@ -135,7 +154,24 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                 if (rowImages[row] === 'images/water-block.png') {
+                        /* If we are drawing water, we will shift the transparency slightly
+                         * In addition, because the block "edge" destroys the transparency
+                         * effect, we will draw only the "surface" portion of the block
+                         */
+                        ctx.save();
+                        ctx.globalAlpha = 0.8;
+                        ctx.drawImage(Resources.get(rowImages[row]), 0, 50,
+                            Resources.get(rowImages[row]).width,
+                            Resources.get(rowImages[row]).height - 86,
+                            col * 101, row * 83 + 50,
+                            Resources.get(rowImages[row]).width,
+                            Resources.get(rowImages[row]).height - 86);
+                        ctx.restore();
+                    }
+                    else {
+                        ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                    }
             }
         }
             
